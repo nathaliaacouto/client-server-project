@@ -10,5 +10,3 @@ try:
 
 except:
     print("Não foi possivel conectar no servidor!")
-    
-

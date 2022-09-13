@@ -17,11 +17,7 @@ print('Servidor ligado, ok\n')
 
 while True:
   conexao, cliente = tcp.accept()
-<<<<<<< HEAD
   print('\nConexão realizada por:', cliente)
 
   texto = conexao.recv(1024)
   print("Mensagem: ", texto.decode())
-=======
-  print('\nConexão realizada por:', cliente)
->>>>>>> 21b1d927b3028b700237863d3a2eb84205bcda26
