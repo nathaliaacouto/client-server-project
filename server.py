@@ -15,7 +15,8 @@ tcp.listen(1)
 print('\nServidor iniciado no IP número', HOST, 'e na porta', PORT)
 
 conexao, cliente = tcp.accept()
-print('\nConexão realizada por:', cliente)
+nome = conexao.recv(1024)
+print('\nConexão realizada por:', nome.decode())
 
 while True:
   texto = conexao.recv(1024)
