@@ -11,11 +11,13 @@ try:
 
 except TimeoutError:
     print("Não foi possivel conectar no servidor!")
+    sys.exit(0)
 
 except ConnectionRefusedError:
     print("Porta incorreta!")
+    sys.exit(0)
 
-finally:
+except:
     print("Incapaz de conectar no servidor!")
     sys.exit(0)
 
