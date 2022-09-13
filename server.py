@@ -15,6 +15,6 @@ tcp.listen(1)
 print('\nServidor iniciado no IP número', HOST, 'e na porta', PORT)
 print('Servidor ligado, ok\n')
 
-##while True:
-  ##conexao, cliente = tcp.accept()
-  ##print('\nConexão realizada por:', cliente)
+while True:
+  conexao, cliente = tcp.accept()
+  print('\nConexão realizada por:', cliente)
