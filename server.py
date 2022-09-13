@@ -1,7 +1,10 @@
 import socket
+from datetime import datetime
+from tempfile import tempdir
+
 
 HOST = '127.0.0.1'  #server IP
-PORT = 5000
+PORT = 5001
 
 tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -16,8 +19,11 @@ print('\nServidor iniciado no IP número', HOST, 'e na porta', PORT)
 
 conexao, cliente = tcp.accept()
 nome = conexao.recv(1024)
-print('\nConexão realizada por:', nome.decode())
+nome = nome.decode()
+print('\nConexão realizada por:', nome)
 
 while True:
-  texto = conexao.recv(1024)
-  print("Mensagem: ", texto.decode())
+  texto = conexao.recv(1024) 
+  tempoAtual = datetime.now().strftime('%H:%M:%S')
+
+  print(f'{tempoAtual} - {nome} diz: {texto.decode()}')
