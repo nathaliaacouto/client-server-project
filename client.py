@@ -23,7 +23,10 @@ except:
 
 print("Conectado ao servidor!")
 print("Digite seu nome:")
+name = input(": ")
+conn.sendall(name.encode())
 
+print("Digite algo!")
 while True:
     mens = input("- ")
     conn.sendall(mens.encode())
