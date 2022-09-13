@@ -22,6 +22,8 @@ except:
     sys.exit(0)
 
 print("Conectado ao servidor!")
+print("Digite algo!")
 
-
-
+while True:
+    mens = input("- ")
+    conn.sendall(mens.encode())
