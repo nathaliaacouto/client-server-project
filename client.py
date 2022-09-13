@@ -22,7 +22,7 @@ except:
     sys.exit(0)
 
 print("Conectado ao servidor!")
-print("Digite algo!")
+print("Digite seu nome:")
 
 while True:
     mens = input("- ")
