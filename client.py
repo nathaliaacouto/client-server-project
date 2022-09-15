@@ -1,8 +1,12 @@
 import socket
 import sys
 
-host = str(input(": "))
-port = int(input(": "))
+# host = str(input(": "))
+# port = int(input(": "))
+
+host = str("127.0.0.1") # DEBUG
+port = int(5000) # DEBUG
+
 h_p = (host, port)
 
 try:
