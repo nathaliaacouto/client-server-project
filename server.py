@@ -2,6 +2,7 @@ import socket
 from datetime import datetime
 from tempfile import tempdir
 
+#recevePackage(tcp)
 
 HOST = '127.0.0.1'  #server IP
 PORT = 5000

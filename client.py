@@ -1,6 +1,19 @@
 import socket
 import sys
 
+#res = ''.join(format(ord(i), '08b') for i in test_str)
+
+def sendPackage(mens, server):
+    mens = ''.join(format(ord(i), '08b') for i in mens)
+    k = int(len(mens)/8)
+    m = mens[0:k]
+    print('- ' + m) 
+    server.sendall(m.encode())
+    for c in range(2,9):
+        m = mens[(c-1)*k:c*k]
+        print('- ' + m)
+        server.sendall(m.encode())
+
 # host = str(input(": "))
 # port = int(input(": "))
 
@@ -28,7 +41,10 @@ except:
 print("Conectado ao servidor!")
 print("Digite seu nome:")
 name = input(": ")
-conn.sendall(name.encode())
+
+sendPackage(name, conn)
+
+#conn.sendall(name.encode())
 
 print("Digite algo!")
 while True:
@@ -39,3 +55,4 @@ while True:
     else:
         conn.sendall(size_message.encode())
         conn.sendall(message_client.encode())
+
