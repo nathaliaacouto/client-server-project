@@ -4,7 +4,7 @@ from tempfile import tempdir
 
 
 HOST = '127.0.0.1'  #server IP
-PORT = 5001
+PORT = 5000
 
 tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -23,7 +23,15 @@ nome = nome.decode()
 print('\nConexão realizada por:', nome)
 
 while True:
-  texto = conexao.recv(1024) 
-  tempoAtual = datetime.now().strftime('%H:%M:%S')
+  tamanho_mensagem = conexao.recv(1024)
+  texto = conexao.recv(1024)
 
-  print(f'{tempoAtual} - {nome} diz: {texto.decode()}')
+  print(len(texto))
+  print(tamanho_mensagem.decode())
+
+
+  if len(texto) != int(tamanho_mensagem.decode()):
+    print("[X] - Tamanho da mensagem incompatível!")
+  else:
+    tempoAtual = datetime.now().strftime('%H:%M:%S')
+    print(f'{tempoAtual} - {nome} diz: {texto.decode()}')

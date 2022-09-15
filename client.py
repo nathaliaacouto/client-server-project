@@ -28,5 +28,10 @@ conn.sendall(name.encode())
 
 print("Digite algo!")
 while True:
-    mens = input("- ")
-    conn.sendall(mens.encode())
+    message_client = input("- ")
+    size_message = str(len(message_client))
+    if size_message == "0":
+        print("Mensagem vazia!, nao enviada!")
+    else:
+        conn.sendall(size_message.encode())
+        conn.sendall(message_client.encode())
