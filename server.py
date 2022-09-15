@@ -27,8 +27,8 @@ while True:
   tamanho_mensagem = conexao.recv(1024)
   texto = conexao.recv(1024)
 
-  print(len(texto))
-  print(tamanho_mensagem.decode())
+  # print(len(texto)) # debug
+  # print(tamanho_mensagem.decode()) # debug
 
 
   if len(texto) != int(tamanho_mensagem.decode()):
