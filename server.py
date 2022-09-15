@@ -19,10 +19,14 @@ tcp.listen(1)
 print('\nServidor iniciado no IP número', HOST, 'e na porta', PORT)
 
 conexao, cliente = tcp.accept()
-print('\nConexão realizada com: ', cliente)
+print('\nConexão realizada com ', cliente)
 
 while True:
-  texto = conexao.recv(1024)
+  texto = conexao.recv(4)
+  if texto.decode() == '-1':
+    print('Sem mais dados do cliente ' + str(cliente))
+    conexao.close()
+    break
 
   tempoAtual = datetime.now().strftime('%H:%M:%S')
   print(f'{tempoAtual} - {cliente} - recebido: {texto.decode()}')

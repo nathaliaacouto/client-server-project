@@ -30,14 +30,20 @@ while True:
         print("Incapaz de conectar no servidor!")
         # sys.exit(0)
 
-print("Conectado ao servidor!", end="\n")
+print("Conectado ao servidor!")
+print('Digite "-1" para finalizar a conexão')
 while True:
-    message_client = input("- ")
-    sm = len(message_client)/8
-    print(round(sm))
+    message_client = input(": ")
+    sm = len(message_client)
+    conn.sendall(message_client.encode())
+    if message_client == '-1':
+        conn.close()
+        break
+    c = 0
+    while True:
+        massage_server = conn.recv(4)
+        c = c + len(massage_server)
+        print('Recebido: ' + str(massage_server.decode()))
+        if c >= sm:
+            break
 
-    for c in range(7):
-        m = message_client[c*sm:(c+1)*sm]
-        conn.sendall(message_client.encode())
-        massage_server = conn.recv(1024)
-        print('Dados recebidos: ' + str(massage_server.decode()))
