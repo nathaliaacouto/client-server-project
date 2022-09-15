@@ -42,7 +42,8 @@ while True:
     c = 0
     while True:
         massage_server = conn.recv(4)
-        c = c + len(massage_server)
+        # m = message_client[c:c+4] mensagem que foi enviada/recebida
+        c = c + 4
         print('Recebido: ' + str(massage_server.decode()))
         if c >= sm:
             break

@@ -22,6 +22,7 @@ conexao, cliente = tcp.accept()
 print('\nConexão realizada com ', cliente)
 
 while True:
+  f1 = 0
   texto = conexao.recv(4)
   if texto.decode() == '-1':
     print('Sem mais dados do cliente ' + str(cliente))
@@ -32,3 +33,4 @@ while True:
   print(f'{tempoAtual} - {cliente} - recebido: {texto.decode()}')
   print('Enviando o dado para o cliente.')
   conexao.sendall(texto)
+  
