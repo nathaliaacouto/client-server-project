@@ -2,19 +2,6 @@ import socket
 import sys
 import time
 
-#res = ''.join(format(ord(i), '08b') for i in test_str)
-
-def sendPackage(mens, server):
-    mens = ''.join(format(ord(i), '08b') for i in mens)
-    k = int(len(mens)/8)
-    m = mens[0:k]
-    print('- ' + m) 
-    server.sendall(m.encode())
-    for c in range(2,9):
-        m = mens[(c-1)*k:c*k]
-        print('- ' + m)
-        server.sendall(m.encode())
-
 # host = str(input(": "))
 # port = int(input(": "))
 
@@ -43,21 +30,14 @@ while True:
         print("Incapaz de conectar no servidor!")
         # sys.exit(0)
 
-print("Conectado ao servidor!")
-print("Digite seu nome:")
-name = input(": ")
-
-sendPackage(name, conn)
-
-#conn.sendall(name.encode())
-
-print("Digite algo!")
+print("Conectado ao servidor!", end="\n")
 while True:
     message_client = input("- ")
-    size_message = str(len(message_client))
-    if size_message == "0":
-        print("Mensagem vazia!, nao enviada!")
-    else:
-        conn.sendall(size_message.encode())
-        conn.sendall(message_client.encode())
+    sm = len(message_client)/8
+    print(round(sm))
 
+    for c in range(7):
+        m = message_client[c*sm:(c+1)*sm]
+        conn.sendall(message_client.encode())
+        massage_server = conn.recv(1024)
+        print('Dados recebidos: ' + str(massage_server.decode()))

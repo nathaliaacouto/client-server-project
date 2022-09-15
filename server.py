@@ -19,20 +19,12 @@ tcp.listen(1)
 print('\nServidor iniciado no IP número', HOST, 'e na porta', PORT)
 
 conexao, cliente = tcp.accept()
-nome = conexao.recv(1024)
-nome = nome.decode()
-print('\nConexão realizada por:', nome)
+print('\nConexão realizada com: ', cliente)
 
 while True:
-  tamanho_mensagem = conexao.recv(1024)
   texto = conexao.recv(1024)
 
-  # print(len(texto)) # debug
-  # print(tamanho_mensagem.decode()) # debug
-
-
-  if len(texto) != int(tamanho_mensagem.decode()):
-    print("[X] - Tamanho da mensagem incompatível!")
-  else:
-    tempoAtual = datetime.now().strftime('%H:%M:%S')
-    print(f'{tempoAtual} - {nome} diz: {texto.decode()}')
+  tempoAtual = datetime.now().strftime('%H:%M:%S')
+  print(f'{tempoAtual} - {cliente} - recebido: {texto.decode()}')
+  print('Enviando o dado para o cliente.')
+  conexao.sendall(texto)
