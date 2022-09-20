@@ -36,6 +36,7 @@ while True:
     message_client = input(": ")
     mSize = len(message_client)
     if message_client == '-1':
+        
         conn.send(message_client.encode())
         conn.close()
         break
@@ -43,7 +44,9 @@ while True:
     i = 0
     while True:
         mens = message_client[4*c:4*(c+1)]
+        val = str(c) + ' '
         conn.send(mens.encode()) 
+        conn.send(val.encode())
         massage_server = conn.recv(4)
         print('Recebido: ' + str(massage_server.decode()))
         c += 1

@@ -21,16 +21,17 @@ print('\nServidor iniciado no IP número', HOST, 'e na porta', PORT)
 conexao, cliente = tcp.accept()
 print('\nConexão realizada com ', cliente)
 
+f1 = 0
 while True:
-  f1 = 0
   texto = conexao.recv(4)
   if texto.decode() == '-1':
     print('Sem mais dados do cliente ' + str(cliente))
     conexao.close()
     break
-
+  
+  pkgN = conexao.recv(2)
   tempoAtual = datetime.now().strftime('%H:%M:%S')
-  print(f'{cliente} - recebido: {texto.decode()}')
+  print(f'{pkgN.decode()} - recebido: {texto.decode()}')
   print('Enviando o dado para o cliente.')
   conexao.sendall(texto)
   
