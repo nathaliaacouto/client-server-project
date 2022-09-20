@@ -30,7 +30,7 @@ while True:
     break
 
   tempoAtual = datetime.now().strftime('%H:%M:%S')
-  print(f'{tempoAtual} - {cliente} - recebido: {texto.decode()}')
+  print(f'{cliente} - recebido: {texto.decode()}')
   print('Enviando o dado para o cliente.')
   conexao.sendall(texto)
   

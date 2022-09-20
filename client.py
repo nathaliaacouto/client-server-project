@@ -47,4 +47,3 @@ while True:
         print('Recebido: ' + str(massage_server.decode()))
         if c >= sm:
             break
-
