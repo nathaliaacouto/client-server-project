@@ -34,16 +34,19 @@ print("Conectado ao servidor!")
 print('Digite "-1" para finalizar a conexão')
 while True:
     message_client = input(": ")
-    sm = len(message_client)
-    conn.sendall(message_client.encode())
+    mSize = len(message_client)
     if message_client == '-1':
+        conn.send(message_client.encode())
         conn.close()
         break
     c = 0
+    i = 0
     while True:
+        mens = message_client[4*c:4*(c+1)]
+        conn.send(mens.encode()) 
         massage_server = conn.recv(4)
-        # m = message_client[c:c+4] mensagem que foi enviada/recebida
-        c = c + 4
         print('Recebido: ' + str(massage_server.decode()))
-        if c >= sm:
+        c += 1
+        i += 4
+        if i >= mSize:
             break
