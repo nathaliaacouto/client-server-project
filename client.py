@@ -47,10 +47,10 @@ while True:
     i = 0
     while True:
         mens = message_client[4*Npckg:4*(Npckg+1)]
-        conn.send(mens.encode()) 
-        conn.send(str(FIN).encode())
-        conn.send(str(ACK).encode())
-        conn.send(str(Npckg).encode())
+        conn.send(mens.encode())  
+        conn.send(str(FIN).encode()) 
+        conn.send(str(ACK).encode())  #error flag 
+        conn.send(str(Npckg).encode())  
         massage_server = conn.recv(4)
         print('Recebido: ' + str(massage_server.decode()))
         Npckg += 1
