@@ -2,19 +2,6 @@ import socket
 import sys
 import time
 
-#res = ''.join(format(ord(i), '08b') for i in test_str)
-
-def sendPackage(mens, server):
-    mens = ''.join(format(ord(i), '08b') for i in mens)
-    k = int(len(mens)/8)
-    m = mens[0:k]
-    print('- ' + m) 
-    server.sendall(m.encode())
-    for c in range(2,9):
-        m = mens[(c-1)*k:c*k]
-        print('- ' + m)
-        server.sendall(m.encode())
-
 # host = str(input(": "))
 # port = int(input(": "))
 
@@ -44,20 +31,29 @@ while True:
         # sys.exit(0)
 
 print("Conectado ao servidor!")
-print("Digite seu nome:")
-name = input(": ")
-
-sendPackage(name, conn)
-
-#conn.sendall(name.encode())
-
-print("Digite algo!")
+print('Digite "-1" para finalizar a conexão')
 while True:
-    message_client = input("- ")
-    size_message = str(len(message_client))
-    if size_message == "0":
-        print("Mensagem vazia!, nao enviada!")
-    else:
-        conn.sendall(size_message.encode())
-        conn.sendall(message_client.encode())
-
+    ACK = 0
+    FIN = 0
+    message_client = input(": ")
+    mSize = len(message_client)
+    if message_client == '-1':
+        FIN = 1
+        conn.send(message_client.encode())
+        conn.send(str(FIN).encode())
+        conn.close()
+        break
+    Npckg = 0
+    i = 0
+    while True:
+        mens = message_client[4*Npckg:4*(Npckg+1)]
+        conn.send(mens.encode()) 
+        conn.send(str(FIN).encode())
+        conn.send(str(ACK).encode())
+        conn.send(str(Npckg).encode())
+        massage_server = conn.recv(4)
+        print('Recebido: ' + str(massage_server.decode()))
+        Npckg += 1
+        i += 4
+        if i >= mSize:
+            break
