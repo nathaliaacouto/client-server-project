@@ -1,6 +1,7 @@
 import socket
 import sys
 import time
+import json as jn
 
 # host = str(input(": "))
 # port = int(input(": "))
@@ -46,12 +47,19 @@ while True:
     Npckg = 0
     i = 0
     while True:
+        #Send
         mens = message_client[4*Npckg:4*(Npckg+1)]
         conn.send(mens.encode()) 
         conn.send(str(FIN).encode())
         conn.send(str(ACK).encode())
         conn.send(str(Npckg).encode())
+
+        #Receve
         massage_server = conn.recv(4)
+        '''sFIN = conn.recv(1)
+        sACK = conn.recv(1)
+        sNPCKG = conn.recv(1)'''
+
         print('Recebido: ' + str(massage_server.decode()))
         Npckg += 1
         i += 4
