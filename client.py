@@ -35,16 +35,10 @@ print("Conectado ao servidor!")
 print('Digite "-1" para finalizar a conexão')
 
 while True:
+    FIN = 0
+    ACK = 0
 
-    client_choose = input("você quer simular um erro?\n1 - sim \n2 - não\nescolha: ")
     message_client = input(": ")
-    if client_choose == '1':
-        ACK = 1
-        FIN = 0
-    else: 
-        ACK = 0
-        FIN = 0
-
     mSize = len(message_client)
     if message_client == '-1':
         FIN = 1
@@ -61,14 +55,41 @@ while True:
         conn.send(str(FIN).encode()) 
         conn.send(str(ACK).encode())  #error flag 
         conn.send(str(Npckg).encode())  
-        if ACK == 1:
-            message_server = conn.recv(200)
-            print('Recebido: ' + str(message_server.decode()))
-            break
-        else: 
-            message_server = conn.recv(4)
-            print('Recebido: ' + str(message_server.decode()) + '\nNúmero de sequência = ', Npckg)
+        
+        message_server = conn.recv(4)
+        print('Recebido: ' + str(message_server.decode()) + ' Número = ', Npckg)
         Npckg += 1
         i += 4
         if i >= mSize:
             break
+    
+    client_choose = input("você quer simular um erro na mensagem passada?\n1 - sim \n2 - não\nescolha- ")
+    if client_choose == '1':
+        pckgNum = input('Qual o pacote que deve conter o erro? ')
+
+        Npckg = 0
+        i = 0
+        while True:
+
+            if Npckg == int(pckgNum):
+                mens = 'e404'
+                conn.send(mens.encode())  
+                conn.send(str(FIN).encode()) 
+                conn.send(str(1).encode())  #error flag 
+                conn.send(str(Npckg).encode())  
+                message_server = conn.recv(41)
+                print('Recebido: ' + str(message_server.decode()) + ' Número = ', Npckg)
+
+
+            mens = message_client[4*Npckg:4*(Npckg+1)]
+            conn.send(mens.encode())  
+            conn.send(str(FIN).encode()) 
+            conn.send(str(ACK).encode())  #error flag 
+            conn.send(str(Npckg).encode())  
+            
+            message_server = conn.recv(4)
+            print('Recebido: ' + str(message_server.decode()) + ' Número = ', Npckg)
+            Npckg += 1
+            i += 4
+            if i >= mSize:
+                break
