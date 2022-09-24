@@ -36,7 +36,7 @@ while True:
   pkgN = conn.recv(2)
   
   tempoAtual = datetime.now().strftime('%H:%M:%S')
-  print(f'{pkgN.decode()} - recebido: {text.decode()} Flags: {fin.decode()}, {ack.decode()}')
+  print(f'{pkgN.decode()} - recebido: {text.decode()} | Flags: {fin.decode()}, {ack.decode()}')
 
   # check for errors in flag
   ack = ack.decode()
