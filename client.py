@@ -32,10 +32,18 @@ while True:
 
 print("Conectado ao servidor!")
 print('Digite "-1" para finalizar a conexão')
+
 while True:
-    ACK = 0
-    FIN = 0
+
+    client_choose = input("você quer simular um erro?\n1 - sim \n2 - não\nescolha: ")
     message_client = input(": ")
+    if client_choose == '1':
+        ACK = 1
+        FIN = 0
+    else: 
+        ACK = 0
+        FIN = 0
+
     mSize = len(message_client)
     if message_client == '-1':
         FIN = 1
@@ -51,8 +59,13 @@ while True:
         conn.send(str(FIN).encode()) 
         conn.send(str(ACK).encode())  #error flag 
         conn.send(str(Npckg).encode())  
-        massage_server = conn.recv(4)
-        print('Recebido: ' + str(massage_server.decode()))
+        if ACK == 1:
+            message_server = conn.recv(200)
+            print('Recebido: ' + str(message_server.decode()))
+            break
+        else: 
+            message_server = conn.recv(4)
+            print('Recebido: ' + str(message_server.decode()))
         Npckg += 1
         i += 4
         if i >= mSize:
