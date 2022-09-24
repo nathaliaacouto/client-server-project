@@ -43,7 +43,7 @@ while True:
   if ack != 0:
     print("Erro!")
     error_flag = 'A mensagem foi recebida com erro, reenvie'
-    conn.sendall(error_flag)
+    conn.sendall(error_flag.encode())
   
   print('Enviando o dado para o cliente.')
   conn.sendall(text)
