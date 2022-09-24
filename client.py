@@ -65,7 +65,7 @@ while True:
             break
         else: 
             message_server = conn.recv(4)
-            print('Recebido: ' + str(message_server.decode()))
+            print('Recebido: ' + str(message_server.decode()) + '\nNúmero de sequência = ', Npckg)
         Npckg += 1
         i += 4
         if i >= mSize:
