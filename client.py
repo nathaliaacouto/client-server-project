@@ -56,9 +56,6 @@ while True:
     i = 0
 
     while True:
-        ACK = 0 
-        if package_num_error == Npckg:
-            ACK = 1 #altera a flag de erro se o pacote for o que o cliente pediu para dar erro
         mens = message_client[4*Npckg:4*(Npckg+1)]
         conn.send(mens.encode())  
         conn.send(str(FIN).encode()) 
