@@ -35,17 +35,10 @@ print("Conectado ao servidor!")
 print('Digite "-1" para finalizar a conexão')
 
 while True:
-    package_num_error = -1
-
-    client_choose = input("\nVocê quer simular um erro?\n1 - sim \n2 - não\nescolha: ")
-    if client_choose == '1':
-        package_num_error = int(input("Qual o número do pacote em que você quer simular o erro? "))
-
-    ACK = 0
     FIN = 0
-    
-    message_client = input(": ")
+    ACK = 0
 
+    message_client = input(": ")
     mSize = len(message_client)
     if message_client == '-1':
         FIN = 1
@@ -63,13 +56,48 @@ while True:
         conn.send(str(FIN).encode()) 
         conn.send(str(ACK).encode())  #flag de erro
         conn.send(str(Npckg).encode())  
-        if ACK == 1:
-            message_server = conn.recv(200)
-            print('Recebido: ' + str(message_server.decode()) + '\nNúmero de sequência = ', Npckg)
-        else: 
-            message_server = conn.recv(4)
-            print('Recebido: ' + str(message_server.decode()) + '\nNúmero de sequência = ', Npckg)
+        
+        message_server = conn.recv(4)
+        print('Recebido: ' + str(message_server.decode()) + ' Número = ', Npckg)
         Npckg += 1
         i += 4
         if i >= mSize:
             break
+    
+    client_choose = input("você quer simular um erro na mensagem passada?\n1 - sim \n2 - não\nescolha- ")
+    if client_choose == '1':
+        pckgNum = input('Qual o pacote que deve conter o erro? ')
+
+        Npckg = 0
+        i = 0
+        while True:
+
+            if Npckg == int(pckgNum):
+                # Simulation of a currupt/lost package
+                mens = 'e404'
+                conn.send(mens.encode())  
+                conn.send(str(FIN).encode()) 
+                conn.send(str(1).encode())  #error flag 
+                conn.send(str(Npckg).encode())  
+                message_server = conn.recv(41)
+                text_server = conn.recv(4)
+                print('Recebido: ' + str(message_server.decode()) + ' Número = ', Npckg)
+                
+                # Validate if the server message is different from the original
+                if (message_client[4*Npckg:4*(Npckg+1)]) != (text_server.decode()):
+                    print('Mensagem recebida pelo servidor é diferente da enviada pelo cliente')
+                    print('Reenviando pacote')
+
+             
+            mens = message_client[4*Npckg:4*(Npckg+1)]
+            conn.send(mens.encode())  
+            conn.send(str(FIN).encode()) 
+            conn.send(str(ACK).encode())  #error flag 
+            conn.send(str(Npckg).encode())  
+                
+            message_server = conn.recv(4)
+            print('Recebido: ' + str(message_server.decode()) + ' Número = ', Npckg)
+            Npckg += 1
+            i += 4
+            if i >= mSize:
+                break
