@@ -38,7 +38,7 @@ while True:
   tempoAtual = datetime.now().strftime('%H:%M:%S')
   print(f'{pkgN.decode()} - recebido: {text.decode()} | Flags: {fin.decode()}, {ack.decode()}')
 
-  # check for errors in flag
+  # check for errors in the flag
   ack = ack.decode()
   if ack != '0':
     print("Mensagem recebida com erro!")
