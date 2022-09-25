@@ -92,7 +92,7 @@ while True:
             mens = message_client[4*Npckg:4*(Npckg+1)]
             conn.send(mens.encode())  
             conn.send(str(FIN).encode()) 
-            conn.send(str(ACK).encode())  #error flag 
+            conn.send(str(ACK).encode())  #erro flag 
             conn.send(str(Npckg).encode())  
                 
             message_server = conn.recv(4)
