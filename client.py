@@ -34,15 +34,16 @@ print("Conectado ao servidor!")
 print('Digite "-1" para finalizar a conexão')
 
 while True:
+    package_num_error = -1
 
-    client_choose = input("você quer simular um erro?\n1 - sim \n2 - não\nescolha: ")
-    message_client = input(": ")
+    client_choose = input("\nVocê quer simular um erro?\n1 - sim \n2 - não\nescolha: ")
     if client_choose == '1':
-        ACK = 1
-        FIN = 0
-    else: 
-        ACK = 0
-        FIN = 0
+        package_num_error = int(input("Qual o número do pacote em que você quer simular o erro? "))
+
+    ACK = 0
+    FIN = 0
+    
+    message_client = input(": ")
 
     mSize = len(message_client)
     if message_client == '-1':
@@ -53,16 +54,19 @@ while True:
         break
     Npckg = 0
     i = 0
+
     while True:
+        ACK = 0 
+        if package_num_error == Npckg:
+            ACK = 1 #altera a flag de erro se o pacote for o que o cliente pediu para dar erro
         mens = message_client[4*Npckg:4*(Npckg+1)]
         conn.send(mens.encode())  
         conn.send(str(FIN).encode()) 
-        conn.send(str(ACK).encode())  #error flag 
+        conn.send(str(ACK).encode())  #flag de erro
         conn.send(str(Npckg).encode())  
         if ACK == 1:
             message_server = conn.recv(200)
-            print('Recebido: ' + str(message_server.decode()))
-            break
+            print('Recebido: ' + str(message_server.decode()) + '\nNúmero de sequência = ', Npckg)
         else: 
             message_server = conn.recv(4)
             print('Recebido: ' + str(message_server.decode()) + '\nNúmero de sequência = ', Npckg)
