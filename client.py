@@ -64,7 +64,12 @@ while True:
         if i >= mSize:
             break
     
-    client_choose = input("você quer simular um erro na mensagem passada?\n1 - sim \n2 - não\nescolha- ")
+    client_choose = input("Você quer simular um erro na mensagem passada?\n1 - sim \n2 - não\nescolha- ")
+    window = input("Você quer simulhar um mecanismo de Janela?\n 1 - sim\n2 - não\nescolha- ")
+    WDW = 0
+    if window == '1':
+        WDW = 1
+
     if client_choose == '1':
         pckgNum = input('Qual o pacote que deve conter o erro? ')
 
@@ -78,6 +83,7 @@ while True:
                 conn.send(mens.encode())  
                 conn.send(str(FIN).encode()) 
                 conn.send(str(1).encode())  #error flag 
+                conn.send(str(WDW).encode()) #window flag
                 conn.send(str(Npckg).encode())  
                 message_server = conn.recv(41)
                 text_server = conn.recv(4)

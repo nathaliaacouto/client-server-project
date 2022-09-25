@@ -23,6 +23,7 @@ conn, client = tcp.accept()
 print('\nConexão realizada com ', client)
 
 f1 = 0
+count = 0
 while True:
   text = conn.recv(4)
   fin = conn.recv(1)
@@ -34,9 +35,15 @@ while True:
   
   ack = conn.recv(1)
   pkgN = conn.recv(2)
+  wdw = conn.recv(3)
   
   tempoAtual = datetime.now().strftime('%H:%M:%S')
-  print(f'{pkgN.decode()} - recebido: {text.decode()} | Flags: {fin.decode()}, {ack.decode()}')
+  print(f'{pkgN.decode()} - recebido: {text.decode()} | Flags: {fin.decode()}, {ack.decode()}, {wdw.decode()}')
+
+  if wdw.decode() == '1':
+    count = count + 1 
+    if count > 2: #recieves only 2 packages
+      break
 
   # check for errors in the flag
   ack = ack.decode()
