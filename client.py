@@ -72,21 +72,28 @@ while True:
         while True:
 
             if Npckg == int(pckgNum):
+                # Simulation of a currupt/lost package
                 mens = 'e404'
                 conn.send(mens.encode())  
                 conn.send(str(FIN).encode()) 
                 conn.send(str(1).encode())  #error flag 
                 conn.send(str(Npckg).encode())  
                 message_server = conn.recv(41)
+                text_server = conn.recv(4)
                 print('Recebido: ' + str(message_server.decode()) + ' Número = ', Npckg)
+                
+                # Validate if the server message is different from the original
+                if (message_client[4*Npckg:4*(Npckg+1)]) != (text_server.decode()):
+                    print('Mensagem recebida pelo servidor é diferente da enviada pelo cliente')
+                    print('Reenviando pacote')
 
-
+             
             mens = message_client[4*Npckg:4*(Npckg+1)]
             conn.send(mens.encode())  
             conn.send(str(FIN).encode()) 
             conn.send(str(ACK).encode())  #error flag 
             conn.send(str(Npckg).encode())  
-            
+                
             message_server = conn.recv(4)
             print('Recebido: ' + str(message_server.decode()) + ' Número = ', Npckg)
             Npckg += 1

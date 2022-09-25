@@ -44,6 +44,7 @@ while True:
     print("Mensagem recebida com erro!")
     error_message = 'A mensagem foi recebida com erro, reenvie'
     conn.sendall(error_message.encode())
+    conn.send(text)
   else:
     print('Enviando o dado para o cliente.')
     conn.sendall(text)
