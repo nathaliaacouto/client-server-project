@@ -1,6 +1,7 @@
 import socket
 from datetime import datetime
 from tempfile import tempdir
+import json as jn
 
 #recevePackage(tcp)
 
@@ -23,7 +24,6 @@ print('\nConexão realizada com ', client)
 
 f1 = 0
 while True:
-
   text = conn.recv(4)
   fin = conn.recv(1)
 
@@ -36,7 +36,7 @@ while True:
   pkgN = conn.recv(2)
   
   tempoAtual = datetime.now().strftime('%H:%M:%S')
-  print(f'{pkgN.decode()} - recebido: {text.decode()} Flags: {fin.decode()}, {ack.decode()}')
+  print(f'{pkgN.decode()} - recebido: {text.decode()} | Flags: {fin.decode()}, {ack.decode()}')
 
   # check for errors in flag
   ack = ack.decode()

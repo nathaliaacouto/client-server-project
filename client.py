@@ -1,6 +1,7 @@
 import socket
 import sys
 import time
+import json as jn
 
 # host = str(input(": "))
 # port = int(input(": "))
@@ -56,6 +57,7 @@ while True:
     i = 0
 
     while True:
+        #Send
         mens = message_client[4*Npckg:4*(Npckg+1)]
         conn.send(mens.encode())  
         conn.send(str(FIN).encode()) 
