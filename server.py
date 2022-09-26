@@ -23,6 +23,7 @@ conn, client = tcp.accept()
 print('\nConexão realizada com ', client)
 
 f1 = 0
+count = 0
 while True:
   text = conn.recv(4)
   fin = conn.recv(1)
@@ -33,10 +34,14 @@ while True:
     break
   
   ack = conn.recv(1)
+  ##wdw = conn.recv(1)
   pkgN = conn.recv(2)
-  
-  tempoAtual = datetime.now().strftime('%H:%M:%S')
-  print(f'{pkgN.decode()} - recebido: {text.decode()} | Flags: {fin.decode()}, {ack.decode()}')
+
+  if pkgN.decode() < '2':
+    print("Essa mensagem caiu na Janela")
+  else:
+    tempoAtual = datetime.now().strftime('%H:%M:%S')
+    print(f'{pkgN.decode()} - recebido: {text.decode()} | Flags: {fin.decode()}, {ack.decode()}')
 
   # check for errors in the flag
   ack = ack.decode()
@@ -46,5 +51,9 @@ while True:
     conn.sendall(error_message.encode())
     conn.send(text)
   else:
-    print('Enviando o dado para o cliente.')
-    conn.sendall(text)
+    if pkgN.decode() < '2':
+      text = "JNLA"
+      conn.sendall(text.encode())
+    else:
+      print('Enviando o dado para o cliente.')
+      conn.sendall(text)
