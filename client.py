@@ -65,7 +65,10 @@ while True:
             conn.send(str(FIN).encode()) 
             conn.send(str(1).encode())  #error flag
             conn.send(str(END).encode()) 
-            conn.send(str(Npckg).encode())  
+            conn.send(str(Npckg).encode())
+
+            # Timeout
+            conn.settimeout(10) 
             message_server = conn.recv(41)
             text_server = conn.recv(4)
             print('Recebido: ' + str(message_server.decode()) + ' | Número = ', Npckg)
@@ -88,6 +91,8 @@ while True:
         conn.send(str(END).encode())
         conn.send(str(Npckg).encode())  
 
+        # Timeout
+        conn.settimeout(10)
         message_server = conn.recv(4)
         print('Recebido: ' + str(message_server.decode()) + ' | Número = ', Npckg)
         Npckg += 1

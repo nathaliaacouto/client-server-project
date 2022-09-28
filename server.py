@@ -24,6 +24,9 @@ print('\nConexão realizada com ', client)
 
 string = ''
 while True:
+
+  # Timeout
+  conn.settimeout(10)
   text = conn.recv(4)
   fin = conn.recv(1)
 
