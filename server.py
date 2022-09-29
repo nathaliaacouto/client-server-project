@@ -10,7 +10,6 @@ PORT = 5000
 
 tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# Colocando um endereço IP e uma porta no Socket
 host_port = (HOST, PORT)
 tcp.bind(host_port)
  
@@ -38,7 +37,7 @@ while True:
   ack = conn.recv(1)
   ##wdw = conn.recv(1)
   end = conn.recv(1)
-  pkgN = conn.recv(2)
+  pkgN = conn.recv(1)
   string = string + str(text.decode())
 
   tempoAtual = datetime.now().strftime('%H:%M:%S')
