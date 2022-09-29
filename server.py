@@ -3,7 +3,7 @@ from datetime import datetime
 from tempfile import tempdir
 import json as jn
 
-#recevePackage(tcp)
+#recevePackage(tcp
 
 HOST = '127.0.0.1'  #server IP
 PORT = 5000
@@ -25,7 +25,7 @@ string = ''
 while True:
 
   # Timeout
-  conn.settimeout(10)
+  #conn.settimeout(10)
   text = conn.recv(4)
   fin = conn.recv(1)
 

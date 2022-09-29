@@ -3,7 +3,7 @@ import sys
 import time
 import json as jn
 
-# Nao usa acento, quebra o encode()
+# Nao usa acento, quebra o encode(
 
 # host = str(input(": "))
 # port = int(input(": "))
