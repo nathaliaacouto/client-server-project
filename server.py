@@ -1,7 +1,6 @@
 import socket
 from datetime import datetime
 from tempfile import tempdir
-import json as jn
 
 #recevePackage(tcp
 

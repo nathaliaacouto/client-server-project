@@ -1,7 +1,6 @@
 import socket
 import sys
 import time
-import json as jn
 
 # Nao usa acento, quebra o encode(
 
